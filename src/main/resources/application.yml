@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/PJ_SHOP
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+#        show_sql: true
+        format_sql: true
+        # Jpql 쿼리 보는 옵션
+        use_sql_comment: true
+
+logging.level:
+  org.hibernate.SQL: debug
+#  org.hibernate.type: trace
