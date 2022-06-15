@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "PRODUCT")
@@ -23,13 +24,18 @@ public class Product {
     private String link;
 
     @Column(name =  "product_size")
-    private String size;
+    private int size;
 
-    @Column(name =  "seller_id")
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id")
+    private Seller sellerId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category categoryId;
+
+    @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL)
+    private List<Post> postList;
+
+
 }

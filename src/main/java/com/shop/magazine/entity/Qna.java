@@ -6,17 +6,19 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CATEGORY")
+@Table(name = "QNA")
 @NoArgsConstructor
 @Getter
-public class Category {
-
+public class Qna {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
-    private String id;
+    @Column(name = "post_id")
+    private Long postId;
 
-    @Column(name = "category_code")
-    private CategoryCode code;
+    @Column(name = "user_Id")
+    private Long userId;
+
+    @Column(name = "contents")
+    private String contents;
 
 }
