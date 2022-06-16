@@ -1,6 +1,7 @@
-package com.shop.magazine.entity;
+package com.shop.magazine.domain.user.entity;
 
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,4 +29,13 @@ public class User {
 
     @Column(name = "user_phone")
     private String phone;
+
+    @Builder
+    public User(Long id, String email, String name, String password, String phone) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+    }
 }
