@@ -17,6 +17,6 @@ public class Category {
     private String id;
 
     @Column(name = "category_code")
-    private CategoryCode code;
+    private int code;
 
 }
