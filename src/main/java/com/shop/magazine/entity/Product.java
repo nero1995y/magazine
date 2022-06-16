@@ -1,5 +1,6 @@
 package com.shop.magazine.entity;
 
+import com.shop.magazine.domain.post.entity.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

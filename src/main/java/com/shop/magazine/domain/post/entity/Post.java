@@ -1,5 +1,7 @@
-package com.shop.magazine.entity;
+package com.shop.magazine.domain.post.entity;
 
+import com.shop.magazine.entity.Category;
+import com.shop.magazine.entity.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
