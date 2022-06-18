@@ -64,6 +64,24 @@ class UserRepositoryTest {
                 .isEqualTo(saveUser);
     }
 
+    @DisplayName("삭제한다 유저를")
+    @Test
+    void deleteUser() {
+        // given
+        User saveUser = userRepository.save(getUser());
+        Optional<User> findUser = userRepository.findById(saveUser.getId());
+
+        // when
+        userRepository.delete(findUser.orElseThrow(
+                ()-> new NoSuchElementException("user not found")));
+
+
+        // then
+        Optional<User> user = userRepository.findById(findUser.get().getId());
+        assertThat(user.isPresent()).isEqualTo(false);
+    }
+
+
     private User getUser() {
         return User.builder()
                 .email("test@naver.com")
