@@ -1,6 +1,5 @@
 package com.shop.magazine.domain.user.entity;
 
-import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
