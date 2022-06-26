@@ -26,10 +26,11 @@ class UserRepositoryCustomTest {
         User saveUser = userRepository.save(getUser());
 
         // when
-        User findUser = userRepository.findByEmail(saveUser.getEmail());
+        Optional<User> findUser = userRepository.findByEmail(saveUser.getEmail());
 
         // then
-        assertThat(findUser
+        assertThat(findUser.orElseThrow(
+                () -> new NoSuchElementException("user not found"))
                 .getEmail())
                 .isEqualTo("test@naver.com");
     }
