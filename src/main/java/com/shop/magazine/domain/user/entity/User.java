@@ -37,4 +37,13 @@ public class User {
         this.password = password;
         this.phone = phone;
     }
+
+    /*  업데이트 */
+    public void update(User user) {
+        this.id = user.id;
+        this.email = user.email;
+        this.name = user.name;
+        this.password = user.password;
+        this.phone = user.phone;
+    }
 }
