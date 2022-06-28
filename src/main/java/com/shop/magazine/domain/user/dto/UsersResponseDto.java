@@ -15,6 +15,8 @@ public class UsersResponseDto {
     private List<UserResponseDto> userResponseList;
 
     public static UsersResponseDto of (List<User> users) {
+
+
         return new UsersResponseDto(toResponse(users));
     }
 
