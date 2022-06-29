@@ -103,11 +103,10 @@ class UserServiceTest {
         UserResponseDto responseDto = userService.findById(save.getId());
         UserUpdateRequestDto user = UserUpdateRequestDto.
                 builder()
-                .id(responseDto.getId())
                 .name("업데이트")
                 .build();
         // when
-        userService.update(user);
+        userService.update(responseDto.getId(), user);
 
         Optional<User> user1 = userRepository.findById(save.getId());
 
