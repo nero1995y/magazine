@@ -30,10 +30,11 @@ public class UserApiController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
-    //TODO nero  Long id 바꾸기
+
     @PatchMapping("api/v1/user/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id,
                                        @RequestBody UserUpdateRequestDto requestDto) {
+        userService.update(id, requestDto);
         return ResponseEntity.ok().build();
     }
 

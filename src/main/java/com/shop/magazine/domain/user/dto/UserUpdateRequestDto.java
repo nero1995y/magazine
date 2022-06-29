@@ -8,19 +8,18 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class UserUpdateRequestDto {
-    private Long id;
     private String email;
     private String name;
     private String password;
     private String phone;
 
     @Builder
-    public UserUpdateRequestDto(Long id,
+    public UserUpdateRequestDto(
                                 String email,
                                 String name,
                                 String password,
                                 String phone) {
-        this.id = id;
+
         this.email = email;
         this.name = name;
         this.password = password;
@@ -28,7 +27,6 @@ public class UserUpdateRequestDto {
     }
     public User toEntity() {
         return User.builder()
-                .id(this.id)
                 .email(this.email)
                 .name(this.name)
                 .password(this.password)

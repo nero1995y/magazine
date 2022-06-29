@@ -39,8 +39,8 @@ public class User {
     }
 
     /*  업데이트 */
-    public void update(User user) {
-        this.id = user.id;
+    public void update(Long id,User user) {
+        this.id = id;
         this.email = user.email;
         this.name = user.name;
         this.password = user.password;

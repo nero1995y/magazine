@@ -46,9 +46,9 @@ public class UserService {
     }
 
     @Transactional
-    public void update(UserUpdateRequestDto requestDto) {
-        User user = findUser(requestDto.toEntity().getId());
-        user.update(requestDto.toEntity());
+    public void update(Long id, UserUpdateRequestDto requestDto) {
+        User user = findUser(id);
+        user.update(id, requestDto.toEntity());
     }
 
     @Transactional
