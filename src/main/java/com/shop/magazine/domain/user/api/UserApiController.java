@@ -16,7 +16,7 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("api/v1/user")
-    public ResponseEntity<Long> save(@RequestBody UserSaveRequestDto requestDto) {
+    public ResponseEntity<Long> register(@RequestBody UserSaveRequestDto requestDto) {
         return ResponseEntity.ok(userService.register(requestDto));
     }
 
