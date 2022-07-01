@@ -1,6 +1,8 @@
-package com.shop.magazine.entity;
+package com.shop.magazine.domain.product.entity;
 
 import com.shop.magazine.domain.post.entity.Post;
+import com.shop.magazine.domain.seller.entity.Seller;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,12 +33,17 @@ public class Product {
     @JoinColumn(name = "seller_id")
     private Seller sellerId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category categoryId;
 
     @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL)
     private List<Post> postList;
 
-
+    @Builder
+    public Product(Long id, String name, String link, int size, Seller sellerId, List<Post> postList) {
+        this.id = id;
+        this.name = name;
+        this.link = link;
+        this.size = size;
+        this.sellerId = sellerId;
+        this.postList = postList;
+    }
 }
