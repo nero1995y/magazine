@@ -1,6 +1,7 @@
 package com.shop.magazine.domain.user.repository;
 
 import com.shop.magazine.domain.user.entity.User;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ class UserRepositoryTest {
     @Autowired
     UserRepository userRepository;
 
+    @AfterEach
+    public void cleanup() {
+        userRepository.deleteAll();
+    }
+
     @DisplayName("저장한다 유저를")
     @Test
     void save() {
@@ -35,6 +41,7 @@ class UserRepositoryTest {
                         ()-> new NoSuchElementException("user not found")).getName());
     }
 
+
     @DisplayName("불러온다 유저들을")
     @Test
     void findUsers() {
@@ -46,7 +53,8 @@ class UserRepositoryTest {
         List<User> userList = userRepository.findAll();
 
         // then
-        assertThat(userList.size()).isEqualTo(2);
+        assertThat(userList).contains(saveUser,saveUser2);
+
     }
 
     @DisplayName("불러온다 유저 단건")
