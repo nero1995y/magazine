@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 public class UserApiController {
@@ -16,7 +18,7 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("api/v1/user")
-    public ResponseEntity<Long> register(@RequestBody UserSaveRequestDto requestDto) {
+    public ResponseEntity<Long> register(@RequestBody @Valid UserSaveRequestDto requestDto) {
         return ResponseEntity.ok(userService.register(requestDto));
     }
 
@@ -33,7 +35,7 @@ public class UserApiController {
 
     @PatchMapping("api/v1/user/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id,
-                                       @RequestBody UserUpdateRequestDto requestDto) {
+                                       @RequestBody @Valid UserUpdateRequestDto requestDto) {
         userService.update(id, requestDto);
         return ResponseEntity.ok().build();
     }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "USER")
@@ -18,15 +19,19 @@ public class User {
     private Long id;
 
     @Column(name = "user_email")
+    @NotNull
     private String email;
 
     @Column(name = "user_name")
+    @NotNull
     private String name;
 
     @Column(name = "user_password")
+    @NotNull
     private String password;
 
     @Column(name = "user_phone")
+    @NotNull
     private String phone;
 
     @Builder
