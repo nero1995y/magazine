@@ -53,9 +53,6 @@ class UserServiceTest {
 
     }
 
-
-
-
     @DisplayName("검증한다_이메일_중복 ")
     @Test
     void verifyEmail() {
@@ -79,7 +76,6 @@ class UserServiceTest {
         UserResponseDto findUser = userService.findById(save.getId());
 
         // then
-
         assertThat(findUser.getEmail()).isEqualTo(save.getEmail());
 
     }
