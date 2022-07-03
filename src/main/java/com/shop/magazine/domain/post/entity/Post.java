@@ -1,7 +1,7 @@
 package com.shop.magazine.domain.post.entity;
 
-import com.shop.magazine.entity.Category;
-import com.shop.magazine.entity.Product;
+import com.shop.magazine.domain.product.entity.Product;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -39,7 +39,14 @@ public class Post {
     @JoinColumn(name = "product_id")
     private Product productId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category categoryId;
+    @Builder
+    public Post(Long id, LocalDateTime createdDate, LocalDateTime modifiedDate, String title, String contents, String status, Product productId) {
+        this.id = id;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+        this.title = title;
+        this.contents = contents;
+        this.status = status;
+        this.productId = productId;
+    }
 }
