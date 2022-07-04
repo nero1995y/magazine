@@ -2,12 +2,12 @@ package com.shop.magazine.domain.seller.service;
 
 import com.shop.magazine.domain.seller.dto.SellerResponse;
 import com.shop.magazine.domain.seller.dto.SellerSaveRequestDto;
+import com.shop.magazine.domain.seller.dto.SellerUpdateRequestDto;
 import com.shop.magazine.domain.seller.dto.SellersResponse;
 import com.shop.magazine.domain.seller.entity.Seller;
 import com.shop.magazine.domain.seller.exception.AlreadySellerException;
+import com.shop.magazine.domain.seller.exception.SellerNotFoundException;
 import com.shop.magazine.domain.seller.repository.SellerRepository;
-import com.shop.magazine.domain.user.dto.UserSaveRequestDto;
-import com.shop.magazine.domain.user.entity.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -100,9 +100,44 @@ class SellerServiceTest {
 
     @DisplayName("업데이트한다_판매자")
     @Test
-    void update
+    void update() {
+        // given
+        Seller save = sellerRepository.save(getSeller());
+        SellerResponse  response = sellerService.findById(save.getId());
+
+        SellerUpdateRequestDto seller = SellerUpdateRequestDto
+                    .builder()
+                    .email("update@naver.com")
+                    .name("업데이트name")
+                    .build();
+
+        // when
+        sellerService.update(response.getId(), seller);
+
+        // then
+        Optional<Seller> updateSeller = sellerRepository.findById(save.getId());
+
+        assertThat(updateSeller.orElse(null).getName())
+                .isEqualTo(seller.getName());
+
+        assertThat(updateSeller.orElse(null).getEmail())
+                .isEqualTo(seller.getEmail());
+    }
+
+    @DisplayName("삭제한다_판매자")
+    @Test
+    void remove() {
+        // given
+        Seller save = sellerRepository.save(getSeller());
+
+        // when
+        sellerService.remove(save.getId());
 
 
+        // then
+        assertThatThrownBy(() -> sellerService.findById(save.getId()))
+                .isInstanceOf(SellerNotFoundException.class);
+    }
 
     private Seller getSeller() {
         return Seller.builder()
