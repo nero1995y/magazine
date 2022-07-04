@@ -41,12 +41,16 @@ public class SellerService {
         seller.update(id, requestDto.toEntity());
     }
 
+    @Transactional
+    public void remove(Long id) {
+        Seller seller = findSeller(id);
+        sellerRepository.deleteById(seller.getId());
+    }
 
     private Seller findSeller(Long id) {
         return sellerRepository.findById(id)
                 .orElseThrow(SellerNotFoundException::new);
     }
-
 
     private void verifyEmail(String email) {
         sellerRepository
