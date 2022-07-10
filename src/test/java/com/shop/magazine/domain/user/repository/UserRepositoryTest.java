@@ -36,9 +36,9 @@ class UserRepositoryTest {
 
         // then
         Optional<User> findUser = userRepository.findById(saveUser.getId());
-        assertThat(saveUser.getName())
+        assertThat(saveUser.getUsername())
                 .isEqualTo(findUser.orElseThrow(
-                        ()-> new NoSuchElementException("user not found")).getName());
+                        ()-> new NoSuchElementException("user not found")).getUsername());
     }
 
 
@@ -93,7 +93,7 @@ class UserRepositoryTest {
     private User getUser() {
         return User.builder()
                 .email("test@naver.com")
-                .name("testId")
+                .username("testId")
                 .password("1234")
                 .phone("01022223333")
                 .build();
@@ -102,7 +102,7 @@ class UserRepositoryTest {
     private User getUser2() {
         return User.builder()
                 .email("test2@naver.com")
-                .name("tes2tId")
+                .username("tes2tId")
                 .password("1234")
                 .phone("01022223333")
                 .build();

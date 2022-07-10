@@ -102,15 +102,17 @@ class UserServiceTest {
         UserResponseDto responseDto = userService.findById(save.getId());
         UserUpdateRequestDto user = UserUpdateRequestDto.
                 builder()
-                .name("업데이트")
+                .username("업데이트")
                 .build();
         // when
         userService.update(responseDto.getId(), user);
 
+
+        // then
         Optional<User> user1 = userRepository.findById(save.getId());
 
-        assertThat(user1.orElse(null).getName())
-                .isEqualTo(user.getName());
+        assertThat(user1.orElse(null).getUsername())
+                .isEqualTo(user.getUsername());
     }
 
     @DisplayName("삭제한다_유저")
@@ -131,7 +133,7 @@ class UserServiceTest {
     private User getUser() {
         return User.builder()
                 .email("test@naver.com")
-                .name("testId")
+                .username("testId")
                 .password("1234")
                 .phone("01022223333")
                 .build();
