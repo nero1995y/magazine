@@ -24,7 +24,7 @@ public class User {
 
     @Column(name = "user_name")
     @NotNull
-    private String name;
+    private String username;
 
     @Column(name = "user_password")
     @NotNull
@@ -35,10 +35,10 @@ public class User {
     private String phone;
 
     @Builder
-    public User(Long id, String email, String name, String password, String phone) {
+    public User(Long id, String email, String username, String password, String phone) {
         this.id = id;
         this.email = email;
-        this.name = name;
+        this.username = username;
         this.password = password;
         this.phone = phone;
     }
@@ -47,7 +47,7 @@ public class User {
     public void update(Long id,User user) {
         this.id = id;
         this.email = user.email;
-        this.name = user.name;
+        this.username = user.username;
         this.password = user.password;
         this.phone = user.phone;
     }
