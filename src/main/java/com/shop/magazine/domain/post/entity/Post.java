@@ -1,28 +1,24 @@
 package com.shop.magazine.domain.post.entity;
 
-import com.shop.magazine.domain.product.entity.Product;
+
+import com.shop.magazine.domain.user.entity.User;
+import com.shop.magazine.global.entity.AuditingEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "POST")
 @NoArgsConstructor
 @Getter
-public class Post {
+public class Post extends AuditingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     private Long id;
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
-
-    @Column(name = "modified_date")
-    private LocalDateTime modifiedDate;
 
     @Column(name = "post_title", length = 10)
     private String title;
@@ -35,18 +31,25 @@ public class Post {
     // TODO enum 타입으로 바꾸기
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product productId;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Builder
-    public Post(Long id, LocalDateTime createdDate, LocalDateTime modifiedDate, String title, String contents, String status, Product productId) {
+    public Post(Long id, String title, String contents, String status, User user) {
         this.id = id;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
         this.title = title;
         this.contents = contents;
         this.status = status;
-        this.productId = productId;
+        this.user = user;
+    }
+
+    public void update(Long id, Post post) {
+        this.id = id;
+        this.title = post.getTitle();
+        this.contents = post.getContents();
+        this.status = post.getStatus(); ;
+        this.user = post.getUser();
     }
 }
