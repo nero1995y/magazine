@@ -43,6 +43,7 @@ public class Post extends AuditingEntity {
         this.contents = contents;
         this.status = status;
         this.user = user;
+        addUser(this);
     }
 
     public void update(Long id, Post post) {
@@ -51,5 +52,9 @@ public class Post extends AuditingEntity {
         this.contents = post.getContents();
         this.status = post.getStatus(); ;
         this.user = post.getUser();
+    }
+
+    public void addUser(Post post) {
+        user.add(post);
     }
 }

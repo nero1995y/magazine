@@ -1,11 +1,13 @@
 package com.shop.magazine.domain.post.service;
 
+import com.shop.magazine.domain.post.dto.PostResponseDto;
 import com.shop.magazine.domain.post.dto.PostSaveRequestDto;
 import com.shop.magazine.domain.post.dto.PostUpdateRequestDto;
 import com.shop.magazine.domain.post.dto.PostsResponseDto;
 import com.shop.magazine.domain.post.entity.Post;
 import com.shop.magazine.domain.post.exception.PostNotFoundException;
 import com.shop.magazine.domain.post.repository.PostRepository;
+import com.shop.magazine.domain.user.dto.UserResponseDto;
 import com.shop.magazine.domain.user.entity.User;
 import com.shop.magazine.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,21 +24,21 @@ public class PostService {
     private final UserService userService;
 
     @Transactional
-    public Long register(Long id, PostSaveRequestDto requestDto) {
+    public Long register(PostSaveRequestDto requestDto) {
 
-        User user = userService.findUser(id);
+        User user = userService.findUser(requestDto.getUserId());
 
         return postRepository
                 .save(requestDto.toEntity(user))
                 .getId();
     }
-//
-//    public PostResponse findPostSingle(Long id, Long userId) {
-//
-//        UserResponseDto findUser = userService.findById(userId);
-//
-//        return new PostResponse(findPost(id), findUser);
-//    }
+
+    public PostResponseDto findPostSingle(Long id) {
+
+//        UserResponseDto user = userService.findById(userId);
+
+        return new PostResponseDto(findPost(id));
+    }
 
     public Post findPost(Long id) {
         return postRepository.findById(id)

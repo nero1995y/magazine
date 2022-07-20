@@ -1,17 +1,21 @@
 package com.shop.magazine.domain.user.entity;
 
+import com.shop.magazine.domain.post.entity.Post;
+import com.shop.magazine.global.entity.AuditingEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "USER")
 @NoArgsConstructor
 @Getter
-public class User {
+public class User extends AuditingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +38,9 @@ public class User {
     @NotNull
     private String phone;
 
+    @OneToMany(mappedBy = "user")
+    private List<Post> postList = new ArrayList<>();
+
     @Builder
     public User(Long id, String email, String username, String password, String phone) {
         this.id = id;
@@ -51,4 +58,9 @@ public class User {
         this.password = user.password;
         this.phone = user.phone;
     }
+
+    public void add(Post post) {
+        postList.add(post);
+    }
+
 }

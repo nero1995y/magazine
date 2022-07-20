@@ -15,11 +15,14 @@ public class PostSaveRequestDto {
     private String contents;
     private String status;
 
+    private Long userId;
+
     @Builder
-    public PostSaveRequestDto(String title, String contents, String status) {
+    public PostSaveRequestDto(String title, String contents, String status, Long userId) {
         this.title = title;
         this.contents = contents;
         this.status = status;
+        this.userId = userId;
     }
 
     public Post toEntity(User user) {
