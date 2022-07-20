@@ -103,6 +103,9 @@ class UserServiceTest {
         UserUpdateRequestDto user = UserUpdateRequestDto.
                 builder()
                 .username("업데이트")
+                .email(responseDto.getEmail())
+                .password(responseDto.getPassword())
+                .phone(responseDto.getPhone())
                 .build();
         // when
         userService.update(responseDto.getId(), user);
