@@ -35,8 +35,6 @@ public class PostService {
 
     public PostResponseDto findPostSingle(Long id) {
 
-//        UserResponseDto user = userService.findById(userId);
-
         return new PostResponseDto(findPost(id));
     }
 

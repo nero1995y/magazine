@@ -41,11 +41,12 @@ class PostServiceTest {
     }
 
 
-    private PostSaveRequestDto getPostSaveRequestDto() {
+    private PostSaveRequestDto getPostSaveRequestDto(Long userId) {
         return PostSaveRequestDto.builder()
                 .title("test 타이틀")
                 .contents("test contents")
                 .status("test type")
+                .userId(userId)
                 .build();
     }
 
@@ -81,11 +82,11 @@ class PostServiceTest {
     void register() {
 
         // given
-        PostSaveRequestDto requestDto = getPostSaveRequestDto();
         Long userId = userService.register(userSaveRequestDto());
+        PostSaveRequestDto requestDto = getPostSaveRequestDto(userId);
 
         // when
-        Long register = postService.register(userId, requestDto);
+        Long register = postService.register(requestDto);
 
         // then
         Post findUser = postRepository.findById(register)
@@ -100,7 +101,7 @@ class PostServiceTest {
     void findById() {
         // given
         Long userId = userService.register(userSaveRequestDto());
-        Long postSaveId = postService.register(userId, getPostSaveRequestDto());
+        Long postSaveId = postService.register(getPostSaveRequestDto(userId));
 
         // when
         Post post = postService.findPost(postSaveId);
@@ -109,29 +110,30 @@ class PostServiceTest {
         assertThat(post.getId()).isEqualTo(postSaveId);
     }
 
-//    @DisplayName("조회한다_포스트_한건_DTO")
-//    @Test
-//    void findPostSingle() {
-//        // given
-//        Long userId = userService.register(userSaveRequestDto());
-//        Long postSaveId = postService.register(userId, getPostSaveRequestDto());
-//
-//        //when
-//        PostResponse response = postService.findPostSingle(userId, postSaveId);
-//
-//    }
+    @DisplayName("조회한다_포스트_한건_DTO")
+    @Test
+    void findPostSingle() {
+        // given
+        Long userId = userService.register(userSaveRequestDto());
+        Long postSaveId = postService.register(getPostSaveRequestDto(userId));
+
+        //when
+        PostResponseDto postSingle = postService.findPostSingle(postSaveId);
+
+        assertThat(postSaveId).isEqualTo(postSingle.getId());
+    }
 
     @DisplayName("조회한다_포스트_여러건")
     @Test
     void findAll() {
         // given
 
-        PostSaveRequestDto requestDto = getPostSaveRequestDto();
-        PostSaveRequestDto requestDto2 = getPostSaveRequestDto();
         Long userId = userService.register(userSaveRequestDto());
+        PostSaveRequestDto requestDto = getPostSaveRequestDto(userId);
+        PostSaveRequestDto requestDto2 = getPostSaveRequestDto(userId);
 
-        Long register1 = postService.register(userId, requestDto);
-        Long register2 = postService.register(userId, requestDto2);
+        Long register1 = postService.register(requestDto);
+        Long register2 = postService.register(requestDto2);
 
         // when
         PostsResponseDto posts = postService.findAll();
