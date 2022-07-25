@@ -1,6 +1,8 @@
 package com.shop.magazine.domain.user.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shop.magazine.domain.user.dto.UserResponseDto;
+import com.shop.magazine.domain.user.dto.UserSaveRequestDto;
 import com.shop.magazine.domain.user.dto.UsersResponseDto;
 import com.shop.magazine.domain.user.entity.User;
 import com.shop.magazine.domain.user.service.UserService;
@@ -13,6 +15,7 @@ import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +23,8 @@ import java.util.List;
 import static org.hamcrest.core.Is.is;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -34,7 +38,7 @@ class UserApiControllerTest {
     @MockBean
     private UserService userService;
 
-    @DisplayName("전체_조회_유저")
+    @DisplayName("GET_user_API_ALL")
     @Test
     void findList() throws Exception {
         // given
@@ -63,7 +67,7 @@ class UserApiControllerTest {
 
     }
 
-    @DisplayName("조회한다_단건_유저를")
+    @DisplayName("GET_user_API_1")
     @Test
     void findByUser() throws Exception {
 
@@ -91,4 +95,57 @@ class UserApiControllerTest {
                 .andExpect(jsonPath("$.username", is("testId")))
                 .andDo(print());
     }
+
+    @DisplayName("POST user API")
+    @Test
+    void register() throws Exception {
+        // given
+        UserSaveRequestDto request = UserSaveRequestDto.builder()
+                .email("test@naver.com")
+                .name("testId")
+                .password("12345")
+                .phone("01022223333")
+                .build();
+
+
+        given(userService.register(request)).willReturn(1L);
+
+        // when
+        ResultActions actions = mvc.perform(post("/api/v1/user")
+                        .content(new ObjectMapper().writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print());
+
+        // then
+        actions.andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(print());
+    }
+
+    @DisplayName("DELETE user API")
+    @Test
+    void remove() throws Exception {
+
+        //given
+        User user = User.builder()
+                .id(1L)
+                .email("test@naver.com")
+                .username("testId")
+                .password("1234")
+                .phone("01022223333")
+                .build();
+
+        willDoNothing().given(userService).remove(user.getId());
+
+        // when
+        ResultActions actions = mvc.perform(delete("/api/v1/user/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print());
+
+        // then
+        actions.andExpect(status().isOk())
+                .andDo(print());
+
+    }
+
 }
