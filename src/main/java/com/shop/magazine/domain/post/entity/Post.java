@@ -36,6 +36,8 @@ public class Post extends AuditingEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+
+
     @Builder
     public Post(Long id, String title, String contents, String status, User user) {
         this.id = id;
