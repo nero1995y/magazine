@@ -7,7 +7,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -38,5 +41,18 @@ public class CategoryRepositoryTest {
 
         assertThat(findCategory).isEqualTo(saveCategory);
 
+    }
+
+    @Test
+    void find() {
+        // given
+        Category category = getCategory();
+        Category save = categoryRepository.save(category);
+
+        // when
+        List<Category> list = categoryRepository.findAll();
+
+        // then
+        assertThat(list).contains(save);
     }
 }
