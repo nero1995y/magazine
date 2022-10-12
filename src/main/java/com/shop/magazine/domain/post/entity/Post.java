@@ -37,15 +37,20 @@ public class Post extends AuditingEntity {
     private User user;
 
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_code")
+    private Category category;
 
     @Builder
-    public Post(Long id, String title, String contents, String status, User user) {
+    public Post(Long id, String title, String contents, String status, User user, Category category) {
         this.id = id;
         this.title = title;
         this.contents = contents;
         this.status = status;
         this.user = user;
+        this.category = category;
         addUser(this);
+        addCategory(this);
     }
 
     public void update(Long id, Post post) {
@@ -58,5 +63,8 @@ public class Post extends AuditingEntity {
 
     public void addUser(Post post) {
         user.add(post);
+    }
+
+    public void addCategory(Post post) {category.add(post);
     }
 }

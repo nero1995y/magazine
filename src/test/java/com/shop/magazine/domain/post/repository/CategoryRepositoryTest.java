@@ -55,4 +55,24 @@ public class CategoryRepositoryTest {
         // then
         assertThat(list).contains(save);
     }
+
+    @Test
+    void deleteCategory() {
+        // given
+        Category save = categoryRepository.save(getCategory());
+        Category findCategory = categoryRepository.findById(save.getId())
+                .orElseThrow(() -> new NoSuchElementException("category not found"));
+
+
+        // when
+        categoryRepository.delete(findCategory);
+
+        // ten
+        Optional<Category> category = categoryRepository.findById(findCategory.getId());
+
+        assertThat(category.isPresent()).isEqualTo(false);
+        assertThat(category).isEmpty();
+
+
+    }
 }
