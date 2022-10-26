@@ -4,8 +4,10 @@ import com.shop.magazine.domain.post.dto.PostResponseDto;
 import com.shop.magazine.domain.post.dto.PostSaveRequestDto;
 import com.shop.magazine.domain.post.dto.PostUpdateRequestDto;
 import com.shop.magazine.domain.post.dto.PostsResponseDto;
+import com.shop.magazine.domain.post.entity.Category;
 import com.shop.magazine.domain.post.entity.Post;
 import com.shop.magazine.domain.post.exception.PostNotFoundException;
+import com.shop.magazine.domain.post.repository.CategoryRepository;
 import com.shop.magazine.domain.post.repository.PostRepository;
 import com.shop.magazine.domain.user.dto.UserSaveRequestDto;
 import com.shop.magazine.domain.user.entity.User;
@@ -35,10 +37,13 @@ class PostServiceTest {
     @Autowired
     private UserService userService;
 
-    @AfterEach
-    public void cleanup() {
-        postRepository.deleteAll();
-    }
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+//    @AfterEach
+//    public void cleanup() {
+//        postRepository.deleteAll();
+//    }
 
 
     private PostSaveRequestDto getPostSaveRequestDto(Long userId) {
@@ -47,6 +52,7 @@ class PostServiceTest {
                 .contents("test contents")
                 .status("test type")
                 .userId(userId)
+                .category(getCategory())
                 .build();
     }
 
@@ -77,13 +83,25 @@ class PostServiceTest {
                 .build();
     }
 
+    private Category getCategory() {
+        return Category.builder()
+                .name("JAVA")
+                .build();
+    }
+
     @DisplayName("등록한다_포스트")
     @Test
+
+    //삭제할것
+    @Rollback(value = false)
     void register() {
 
         // given
         Long userId = userService.register(userSaveRequestDto());
         PostSaveRequestDto requestDto = getPostSaveRequestDto(userId);
+
+        // 카테고리
+        categoryRepository.save(getCategory());
 
         // when
         Long register = postService.register(requestDto);
