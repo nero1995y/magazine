@@ -91,9 +91,6 @@ class PostServiceTest {
 
     @DisplayName("등록한다_포스트")
     @Test
-
-    //삭제할것
-    @Rollback(value = false)
     void register() {
 
         // given
