@@ -28,7 +28,9 @@ public class SecurityConfig {
 
                 // 로그인 페이지로 이동
                 .formLogin()
-                .loginPage("/login");
+                .loginPage("/login-form")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/");
 
         return http.build();
     }
