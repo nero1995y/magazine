@@ -38,6 +38,9 @@ public class User extends AuditingEntity {
     @NotNull
     private String phone;
 
+    @Column(name = "user_role")
+    private String role;
+
     @OneToMany(mappedBy = "user")
     private List<Post> postList = new ArrayList<>();
 

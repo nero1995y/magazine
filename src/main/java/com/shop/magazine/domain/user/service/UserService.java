@@ -63,6 +63,10 @@ public class UserService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
+
+    public User findUsername(String username) {
+        return userRepository.findByUsername(String username);
+    }
 }
 
 
