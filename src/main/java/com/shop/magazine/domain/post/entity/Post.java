@@ -42,15 +42,13 @@ public class Post extends AuditingEntity {
     private Category category;
 
     @Builder
-    public Post(Long id, String title, String contents, String status, User user, Category category) {
+    public Post(Long id, String title, String contents, String status, User user) {
         this.id = id;
         this.title = title;
         this.contents = contents;
         this.status = status;
         this.user = user;
-        this.category = category;
         addUser(this);
-        addCategory(this);
     }
 
     public void update(Long id, Post post) {
@@ -65,6 +63,4 @@ public class Post extends AuditingEntity {
         user.add(post);
     }
 
-    public void addCategory(Post post) {category.add(post);
-    }
 }

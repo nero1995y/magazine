@@ -1,6 +1,5 @@
 package com.shop.magazine.domain.post.repository;
 
-import com.shop.magazine.domain.post.entity.Category;
 import com.shop.magazine.domain.post.entity.Post;
 import com.shop.magazine.domain.user.entity.User;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +28,6 @@ class PostRepositoryTest {
                 .contents("테스트 컨텐츠")
                 .status("타입1")
                 .user(getUser())
-                .category(getCategory())
                 .build();
     }
     private Post getPost2() {
@@ -38,7 +36,6 @@ class PostRepositoryTest {
                 .contents("테스트 컨텐츠2")
                 .status("타입1")
                 .user(getUser())
-                .category(getCategory())
                 .build();
     }
     private User getUser() {
@@ -47,12 +44,6 @@ class PostRepositoryTest {
                 .username("tes1tId")
                 .password("1234")
                 .phone("01022223333")
-                .build();
-    }
-
-    private Category getCategory() {
-        return Category.builder()
-                .name("자유게시판")
                 .build();
     }
 

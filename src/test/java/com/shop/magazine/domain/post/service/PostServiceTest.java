@@ -4,7 +4,6 @@ import com.shop.magazine.domain.post.dto.PostResponseDto;
 import com.shop.magazine.domain.post.dto.PostSaveRequestDto;
 import com.shop.magazine.domain.post.dto.PostUpdateRequestDto;
 import com.shop.magazine.domain.post.dto.PostsResponseDto;
-import com.shop.magazine.domain.post.entity.Category;
 import com.shop.magazine.domain.post.entity.Post;
 import com.shop.magazine.domain.post.exception.PostNotFoundException;
 import com.shop.magazine.domain.post.repository.CategoryRepository;
@@ -12,7 +11,6 @@ import com.shop.magazine.domain.post.repository.PostRepository;
 import com.shop.magazine.domain.user.dto.UserSaveRequestDto;
 import com.shop.magazine.domain.user.entity.User;
 import com.shop.magazine.domain.user.service.UserService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +50,6 @@ class PostServiceTest {
                 .contents("test contents")
                 .status("test type")
                 .userId(userId)
-                .category(getCategory())
                 .build();
     }
 
@@ -83,12 +80,6 @@ class PostServiceTest {
                 .build();
     }
 
-    private Category getCategory() {
-        return Category.builder()
-                .name("JAVA")
-                .build();
-    }
-
     @DisplayName("등록한다_포스트")
     @Test
     void register() {
@@ -96,9 +87,6 @@ class PostServiceTest {
         // given
         Long userId = userService.register(userSaveRequestDto());
         PostSaveRequestDto requestDto = getPostSaveRequestDto(userId);
-
-        // 카테고리
-        categoryRepository.save(getCategory());
 
         // when
         Long register = postService.register(requestDto);
