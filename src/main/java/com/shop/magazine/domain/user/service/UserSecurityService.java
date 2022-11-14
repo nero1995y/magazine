@@ -17,8 +17,6 @@ public class UserSecurityService {
     }
 
     public String GetRole() {
-        String defaultRole = "ROLE_USER";
-
-        return defaultRole;
+        return "ROLE_USER";
     }
 }
