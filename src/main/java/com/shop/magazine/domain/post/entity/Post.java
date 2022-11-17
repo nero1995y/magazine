@@ -36,11 +36,6 @@ public class Post extends AuditingEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_code")
-    private Category category;
-
     @Builder
     public Post(Long id, String title, String contents, String status, User user) {
         this.id = id;
