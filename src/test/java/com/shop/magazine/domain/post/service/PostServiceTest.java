@@ -6,11 +6,11 @@ import com.shop.magazine.domain.post.dto.PostUpdateRequestDto;
 import com.shop.magazine.domain.post.dto.PostsResponseDto;
 import com.shop.magazine.domain.post.entity.Post;
 import com.shop.magazine.domain.post.exception.PostNotFoundException;
-import com.shop.magazine.domain.post.repository.CategoryRepository;
 import com.shop.magazine.domain.post.repository.PostRepository;
 import com.shop.magazine.domain.user.dto.UserSaveRequestDto;
 import com.shop.magazine.domain.user.entity.User;
 import com.shop.magazine.domain.user.service.UserService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +35,10 @@ class PostServiceTest {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-//    @AfterEach
-//    public void cleanup() {
-//        postRepository.deleteAll();
-//    }
+    @AfterEach
+    public void cleanup() {
+        postRepository.deleteAll();
+    }
 
 
     private PostSaveRequestDto getPostSaveRequestDto(Long userId) {
